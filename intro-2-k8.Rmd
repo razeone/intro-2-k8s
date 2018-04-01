@@ -1,0 +1,76 @@
+---
+title: "Intro to Kubernetes"
+author: "Jorge Raze"
+date: "31 de marzo de 2018"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Bibiografía
+
+Este curso está basado en el curso [Introduction to Kubernetes](https://www.edx.org/es/course/introduction-to-kubernetes) impartido en [edX](https://www.edx.org/es) por la [Linux Foundation](https://www.linuxfoundation.org/).
+
+La presentación completa puede encontrarse en el repositorio [write the repo later].
+
+## Introducción
+
+La adopción en el uso de contenedores en áreas de desarrollo de software, nos ha mostrado que son la pieza tecnológica que hacía falta en los entornos colaborativos de desarrollo; en donde encontramos múltiples y muy heterogéneas plataformas. Al aislar nuestro código, el entorno de ejecución, y todas las dependencias podemos lograr un acuerdo transversal entre todos los colaboradores. Usando [Docker](https://www.docker.com/), [runC](https://github.com/opencontainers/runc), [containerd](https://containerd.io/), o [rkt](https://github.com/rkt/rkt), se pueden lanzar contenedores de esas imagenes aisladas mencionadas anteriormente.
+
+Sin embargo, cuando pensamos en el despliegue, en el entorno de producción, cuando queremos correr nuestro código en un cluster con mayores capacidades; nos gustaría tener una solución escalable y tolerante a fallos, es decir una manera central de controlar los nodos de un clúster y los contenedores a desplegar en el mismo, a esta pieza central se le conoce como *Orquestador de Contenedores*.
+
+## Qué es Orquestación de Contenedores?
+
+Cuando nos encontramos en una etapa de desarrollo o de quality assurance, podemos darnos abasto corriendo contenedores en un nodo local para probar nuestras aplicaciones, Sin embargo, al ir a producción, no tenemos la misma libertas y necesitamos asegurarnos que nuestras aplicaciones:
+
+* Sean tolerantes a fallos
+* Puedan escalar bajo demanda
+* Utilizan recursos de manera óptima
+* Pueden descubrir otras aplicaciones automáticamente, y se comunican entre ellas
+* Son accesibles desde el mundo exterior
+* Pueden actualizarse o restaurarse sin ocasionar pérdida de servicio
+
+Los Orquestadores de Contenedores son las herramientas que agrupan hosts para formas clústers, y nos ayudan a aprovisionar los requerimientos mencionados arriba.
+
+
+## Algunos Orquestadores de Contenedores
+
+* [Docker Swarm](https://docs.docker.com/engine/swarm/)
+* [Kubernetes](https://kubernetes.io/)
+* [Mesos Marathon](https://github.com/mesosphere/marathon)
+* [Amazon ECS](https://aws.amazon.com/ecs/)
+* [Hashicorp Nomad](https://www.nomadproject.io/)
+
+
+## Qué hay de Kubernetes?
+
+De acuerdo con el [sitio web de Kubernetes](https://kubernetes.io/)
+
+> "Kubernetes es un sistema de código abierto para automatizar despliegue, escalado, y administración de aplicaciones contenerizadas."
+
+También se suele referir a Kubernetes como **k8s**, por los 8 caracteres entre la *k* y la *s*.
+
+Kubernetes está inspirado por el sistema [Borg](https://research.google.com/pubs/pub43438.html), desarrollado por Google.
+
+Kubernetes fue iniciado por Google y su versión 1.0 fue liberada en julio de 2015. Google la donó a la [Cloud Native Computing Foundation](https://www.cncf.io/) (CNCF).
+
+Generalmente, Kubernetes tiene nuevas liberaciones cada tres meses. La versión estable a la fecha es la 1.10 (marzo de 2018).
+
+
+## Características de Kubernetes I
+
+Kubernetes ofrece un conjunto de caratcerísticas para orquestación de contenedores, Algunas de las que son actualmente soportadas son:
+
+* **Automatic Binpacking** Kubernetes agenda automáticamente los contenedores basados en el uso de recursos y restricciones, sin sacrificar la disponibilidad.
+
+* **Self-healing** Kubernetes reemplaza automáticamente y reagenda los contenedores desde los nodos que han fallado. También mata y reinicia los contenedores que no responden a los chequeos de salud, basado en reglas/políticas existentes.
+
+* **Horizontal scaling** Kubernetes puede escalar automáticamente aplicaciones basadas en uso de recursos como CPU y memoria. En algunos casos, también soporta escalado dinámico basado en métricas definidas.
+
+* **Service discovery and Load Balancing** Kubernetes agrupa conjuntos de contenedores y se refiere a ellos a través de nombres de dominio. Este nombre de dominio es un **servicio** de Kubernetes. Kubernetes puede descubrir estos servicios automáticamente, y balancear las solicitudes entre los contenedores de algún servicio.
+
+
+## Características de Kubernetes II
+
